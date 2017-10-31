@@ -75,10 +75,6 @@ const styles = StyleSheet.create({
   weeks: {
       flexDirection: 'column',
   },
-  day: {
-      height: 90,
-      width: 80
-  }
   day_green: {
       backgroundColor: "#9f9",
       height: 90,
