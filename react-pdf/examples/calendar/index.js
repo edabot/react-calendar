@@ -15,8 +15,8 @@ import {
 } from '@react-pdf/core';
 import MonthCol from './monthCol'
 
-const STARTDATE1 = moment().dayOfYear(1)
-const STARTDATE2 = moment().dayOfYear(186)
+const STARTDATE1 = moment().year(2018).dayOfYear(1).startOf('week')
+const STARTDATE2 = moment().year(2018).dayOfYear(182).startOf('week')
 
 const styles = StyleSheet.create({
   title: {
@@ -88,11 +88,11 @@ const doc = (
           </View>
         <View style={styles.rowCalendar}>
           <View style={styles.monthCol}>
-            <MonthCol startDate={STARTDATE1} weeks={26}/>
+            <MonthCol startDate={STARTDATE1} weekCount={27}/>
           </View>
           <View style={styles.gutter} />
           <View style={styles.monthCol}>
-            <MonthCol startDate={STARTDATE2} weeks={26}/>
+            <MonthCol startDate={STARTDATE2} weekCount={27}/>
           </View>
         </View>
       </View>

@@ -65,6 +65,40 @@ const styles = StyleSheet.create({
       width: 766,
       backgroundColor: '#990000'
   },
+  day: {
+    width: 90,
+    height: 80
+  },
+  week: {
+      flexDirection: 'row',
+  },
+  weeks: {
+      flexDirection: 'column',
+  },
+  day: {
+      height: 90,
+      width: 80
+  }
+  day_green: {
+      backgroundColor: "#9f9",
+      height: 90,
+      width: 80
+  },
+  day_yellow: {
+      backgroundColor: "#9ff",
+      height: 90,
+      width: 80
+  },
+  day_red: {
+      backgroundColor: "#f99",
+      height: 90,
+      width: 80
+  },
+  day_blue: {
+      backgroundColor: "#99f",
+      height: 90,
+      width: 80
+  },
 });
 
 Font.register(`${__dirname}/fonts/Roboto-Regular.ttf`, { family: 'Roboto' });
@@ -73,28 +107,56 @@ Font.register(
   { family: 'Oswald' },
 );
 
-const Day = ({startDate}) => {
+const Day = ({date}) => {
+    let month = date.month() + 1
+    if ( month % 4 === 1 ) {
+        return (
+            <Text style={styles.day_green}>{date.date()}</Text>
+        )
+    } else if ( month % 4 === 2 ) {
+        return (
+            <Text style={styles.day_yellow}>{date.date()}</Text>
+        )
+    } else if ( month % 4 === 3 ) {
+        return (
+            <Text style={styles.day_red}>{date.date()}</Text>
+        )
+    } else {
+        return (
+            <Text style={styles.day_blue}>{date.date()}</Text>
+        )
+    }
+
+}
+
+const Week = ({startDate}) => {
+    let days = []
+    for (let i=0; i < 7; i++) {
+        days.push(moment(startDate).add(i, 'days'));
+    }
     return (
-            <Text>{startDate.weekday()}</Text>
+        <View style={styles.week}>
+            {days.map((date) => <Day key={date} date={date} />)}
+        </View>
     )
 }
 
-const MonthCol = ({startDate, weeks}) => {
-    let dates = []
-    for (let i=0; i < 7; i++) {
-        dates.push(moment(startDate).add(i, 'days'));
+const MonthCol = ({startDate, weekCount}) => {
+    let weeks = []
+    for (let i=0; i < weekCount; i++) {
+        weeks.push(moment(startDate).add(i * 7, 'days'));
     }
-    function showWeekday() {
+    function showWeeks() {
         return (
-            <View>
-                {dates.map((date) => <Day key={date} startDate={date} />)}
+            <View style={styles.weeks}>
+                {weeks.map((date) => <Week key={date} startDate={date} />)}
             </View>
         )
     }
 
     return (
         <View>
-            {showWeekday()}
+            {showWeeks()}
         </View>
     );
 };
